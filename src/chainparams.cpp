@@ -54,10 +54,13 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     while (true)
     {
         thash = genesis.GetX16RTPoWHash();
-        if (UintToArith256(thash) <= hashTarget)
+        if (UintToArith256(thash) <= hashTarget){
+            
             break;
+        }
+            
         if ((genesis.nNonce & 0xF) == 0) {
-            //printf("nonce %08X: hash = %s (target = %s)\n", genesis.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
+            printf("nonce %08X: hash = %s (target = %s)\n", genesis.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
         }
         ++genesis.nNonce;
         if (genesis.nNonce == 0)
@@ -67,11 +70,12 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
         }
     }
 
-//    printf("genesis block hash: %s\n", genesis.GetHash().GetHex().c_str());
-//    printf("genesis nonce: %d\n", genesis.nNonce);
-//    printf("genesis merkle root: %s\n", genesis.hashMerkleRoot.GetHex().c_str());
-//    printf("genesis witness merkle root: %s\n", genesis.hashWitnessMerkleRoot.GetHex().c_str());
-//    printf("genesis veil data hash: %s\n", genesis.hashVeilData.GetHex().c_str());
+   printf("genesis block hash: %s\n", genesis.GetHash().GetHex().c_str());
+   printf("genesis nonce: %d\n", genesis.nNonce);
+   printf("genesis nonce: %d\n", genesis.nTime);
+   printf("genesis merkle root: %s\n", genesis.hashMerkleRoot.GetHex().c_str());
+   printf("genesis witness merkle root: %s\n", genesis.hashWitnessMerkleRoot.GetHex().c_str());
+   printf("genesis veil data hash: %s\n", genesis.hashVeilData.GetHex().c_str());
 
     return genesis;
 }
@@ -89,8 +93,8 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "NPR 01/Jan/2019 NASA Probe Sends Pictures Of An Object 4 Billion Miles From The Sun";
-    const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+    const char* pszTimestamp = "Kamis Wage, 18 januari 2024 new devel";
+    const CScript genesisOutputScript = CScript() << ParseHex("04271c4db2c333594f4ca793e015b5bb9ea4e0c125deb99f336ddfdef9caf2fce8a030b781252ccd49ac71d31ac07243504d15f317e61b2ba20a95f049f0252443") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -250,50 +254,50 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xb6;
-        pchMessageStart[1] = 0xcf;
-        pchMessageStart[2] = 0xd0;
-        pchMessageStart[3] = 0xa3;
+        pchMessageStart[0] = 0x6a;
+        pchMessageStart[1] = 0x61;
+        pchMessageStart[2] = 0x69;
+        pchMessageStart[3] = 0x6c;
         nDefaultPort = 58810;
         nPruneAfterHeight = 100000;
 
         /** Timestamp when to switch to ProgPow, RandomX, Sha256D. UTC based **/
-        nPowUpdateTimestamp = 1604163600; // Saturday, 31 October 2020, 5:00:00 PM GMT
+        nPowUpdateTimestamp = 1705572903; // Saturday, 31 October 2020, 5:00:00 PM GMT
         /// Used by block.h for serialization
-        nPowTimeStampActive = 1604163600;
+        nPowTimeStampActive = 1705572903;
 
         nHeightKIenforce = 1212090;
         nTimeKIfork = 1621180800;
 
-        int nTimeStart = 1540413025;
-        uint32_t nNonce = 3492319;
+        int nTimeStart = 1704880569;
+        uint32_t nNonce = 448737;
         genesis = CreateGenesisBlock(nTimeStart, nNonce, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(genesis.hashWitnessMerkleRoot == uint256S("0xa6d192b185dc382a8d7e7dbb5f7a212a54cb93b94e6b9e08869d9169c04993b0"));
-        assert(consensus.hashGenesisBlock == uint256S("0x051be91d426dfff0a2a3b8895a0726d997c2749c501b581dd739687e706d7f0b"));
-        assert(genesis.hashMerkleRoot == uint256S("0xa6d192b185dc382a8d7e7dbb5f7a212a54cb93b94e6b9e08869d9169c04993b0"));
-        assert(genesis.hashVeilData == uint256S("0x8b7f273daa09d2d0fa6abeb27a2a87a4ee6c947ac04931f4f3b6b83f1cf7ad3f"));
+        assert(genesis.hashWitnessMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
+        assert(consensus.hashGenesisBlock == uint256S("0xd6b1e45193925ec14191d5bce777a8743bbad8b3d76c28ed12ffd5d1eb1b2b5e"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
+        assert(genesis.hashVeilData == uint256S("0x76de25a2af615d69a50770ab367dcb223e0357692a25d5e41255c607ba5aa1fe"));
 
-        vSeeds.emplace_back("node01.veil-project.com");
-        vSeeds.emplace_back("node02.veil-project.com");
-        vSeeds.emplace_back("node03.veil-project.com");
-        vSeeds.emplace_back("node04.veil-project.com");
-        vSeeds.emplace_back("node05.veil-project.com");
-        vSeeds.emplace_back("node06.veil-project.com");
-        vSeeds.emplace_back("node07.veil-project.com");
-        vSeeds.emplace_back("node08.veil-project.com");
-        vSeeds.emplace_back("node09.veil-project.com");
-        vSeeds.emplace_back("node10.veil-project.com"); // Codeofalltrades seeder
-        vSeeds.emplace_back("node11.veil-project.com"); // CaveSpectre seeder
-        // single point DNS failure backups
-        vSeeds.emplace_back("veilseed.codeofalltrades.com");       // Codeofalltrades seeder
-        vSeeds.emplace_back("veilseed.veil-stats.com");            // Codeofalltrades seeder
-        vSeeds.emplace_back("veil-seed.pontificatingnobody.com");  // CaveSpectre seeder
+        // vSeeds.emplace_back("node01.veil-project.com");
+        // vSeeds.emplace_back("node02.veil-project.com");
+        // vSeeds.emplace_back("node03.veil-project.com");
+        // vSeeds.emplace_back("node04.veil-project.com");
+        // vSeeds.emplace_back("node05.veil-project.com");
+        // vSeeds.emplace_back("node06.veil-project.com");
+        // vSeeds.emplace_back("node07.veil-project.com");
+        // vSeeds.emplace_back("node08.veil-project.com");
+        // vSeeds.emplace_back("node09.veil-project.com");
+        // vSeeds.emplace_back("node10.veil-project.com"); // Codeofalltrades seeder
+        // vSeeds.emplace_back("node11.veil-project.com"); // CaveSpectre seeder
+        // // single point DNS failure backups
+        // vSeeds.emplace_back("veilseed.codeofalltrades.com");       // Codeofalltrades seeder
+        // vSeeds.emplace_back("veilseed.veil-stats.com");            // Codeofalltrades seeder
+        // vSeeds.emplace_back("veil-seed.pontificatingnobody.com");  // CaveSpectre seeder
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,70);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,39);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);
-        base58Prefixes[STEALTH_ADDRESS] ={0x84}; // v
+        base58Prefixes[STEALTH_ADDRESS] ={0x68}; // h
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
         nBIP44ID = 0x800002ba;
@@ -301,10 +305,10 @@ public:
         nZerocoinAccount = 100000;
 
         //sv for "stealth veil" & bv for "basecoin veil"
-        bech32Prefixes[STEALTH_ADDRESS].assign("sv",&"sv"[2]);
-        bech32Prefixes[BASE_ADDRESS].assign("bv", &"bv"[2]);
-        bech32_hrp_stealth = "sv";
-        bech32_hrp_base = "bv";
+        bech32Prefixes[STEALTH_ADDRESS].assign("sh",&"sh"[2]);
+        bech32Prefixes[BASE_ADDRESS].assign("bh", &"bh"[2]);
+        bech32_hrp_stealth = "sh";
+        bech32_hrp_base = "bh";
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
@@ -312,33 +316,33 @@ public:
 
         checkpointData = {
             {
-                { 95, uint256S("0x09d5711299f02d411ae2b49e0e5ca351af747eb8b5644867c078cbeeadc02626")},
-                { 280, uint256S("0x53e66a0f8f4139db93a1f38403012c95bbabef7620d61ae25fed7277e868477f")},
-                { 1600, uint256S("0xb9f631a0b74b062baa8a01958b66058e8437ed751900ed84165543ec0ed312b5")},
-                { 1880, uint256S("0x862c43c183583b364d8d2a35f9d1ca9198d844c1b972aab06c30520b59f6e4f6")},
-                { 12500, uint256S("0xa36df367e933c731c59caf5b99a7b0a0d893858fead77e6248e01f44f3c621d7")},
-                { 29000, uint256S("0xb1f7b8cc4669ba57c341c3dd49da16d174f9c2a0673c5f3556225b9f8bb4454e")},
-                { 36000, uint256S("0x24d1d2662203f225bb16e9535928dd2493033c1ef10124f241d9a6f36d9bf242")},
-                { 52000, uint256S("0x96867cbf3f54e5dbdc19d237d264df6734eaea5975e30db41922aa3c14bd64c0")},
-                { 101000, uint256S("0x42145acdde948865d73a8b318fea09b9e9cb826f93007c7a21b4f103822da86d")},
-                { 175500, uint256S("0xf0db2fb676587ccd8e65f509b970b782d2095e1010939bab4a6d59debd633aa8")},
-                { 248600, uint256S("0x18903b67287bb5f0fa95c3ab75af2fcf9e483be3d64d3e112b9bc52acb71a2b6")},
-                { 320000, uint256S("0xb8007b911602d6f79afe8f0f3a65f04182a19441e90d9c5ce9ce0e53a80073b5")},
-                { 337000, uint256S("0x2933365852ca6fffa51a584efe419a1948d65cd186013e406d52377c3dde1890")},
-                { 436000, uint256S("0x961c466e63f228b86a242dad09d9a7a0ea0cf26a89aa213b1154fb84a8cb0bd1")},
-                { 526000, uint256S("0x96afd32946736010de56510550691a36bf6b3cb116583cdc6ba7b3809ca10665")},
-                { 616000, uint256S("0x5bb5720555003d74166fdc57899af4c36719558d20bee6472852c16e5a0c2e86")},
-                { 706000, uint256S("0xf98ece86f185e15af9a9d6b554c54f36f0b8b19d11e5e98ffe3b7578a0c8e2f9")},
-                { 840000, uint256S("0x9b46be33e4a84456e7c4e4785bad8646cb7cf1b6192adfd4c2916e768254f621")},
-                { 1744442, uint256S("0xe464d7547e1a21fe2471ddc4a6da535e2e9011ed570ab687897c7b7c7d9ed83f")},
+                // { 95, uint256S("0x09d5711299f02d411ae2b49e0e5ca351af747eb8b5644867c078cbeeadc02626")},
+                // { 280, uint256S("0x53e66a0f8f4139db93a1f38403012c95bbabef7620d61ae25fed7277e868477f")},
+                // { 1600, uint256S("0xb9f631a0b74b062baa8a01958b66058e8437ed751900ed84165543ec0ed312b5")},
+                // { 1880, uint256S("0x862c43c183583b364d8d2a35f9d1ca9198d844c1b972aab06c30520b59f6e4f6")},
+                // { 12500, uint256S("0xa36df367e933c731c59caf5b99a7b0a0d893858fead77e6248e01f44f3c621d7")},
+                // { 29000, uint256S("0xb1f7b8cc4669ba57c341c3dd49da16d174f9c2a0673c5f3556225b9f8bb4454e")},
+                // { 36000, uint256S("0x24d1d2662203f225bb16e9535928dd2493033c1ef10124f241d9a6f36d9bf242")},
+                // { 52000, uint256S("0x96867cbf3f54e5dbdc19d237d264df6734eaea5975e30db41922aa3c14bd64c0")},
+                // { 101000, uint256S("0x42145acdde948865d73a8b318fea09b9e9cb826f93007c7a21b4f103822da86d")},
+                // { 175500, uint256S("0xf0db2fb676587ccd8e65f509b970b782d2095e1010939bab4a6d59debd633aa8")},
+                // { 248600, uint256S("0x18903b67287bb5f0fa95c3ab75af2fcf9e483be3d64d3e112b9bc52acb71a2b6")},
+                // { 320000, uint256S("0xb8007b911602d6f79afe8f0f3a65f04182a19441e90d9c5ce9ce0e53a80073b5")},
+                // { 337000, uint256S("0x2933365852ca6fffa51a584efe419a1948d65cd186013e406d52377c3dde1890")},
+                // { 436000, uint256S("0x961c466e63f228b86a242dad09d9a7a0ea0cf26a89aa213b1154fb84a8cb0bd1")},
+                // { 526000, uint256S("0x96afd32946736010de56510550691a36bf6b3cb116583cdc6ba7b3809ca10665")},
+                // { 616000, uint256S("0x5bb5720555003d74166fdc57899af4c36719558d20bee6472852c16e5a0c2e86")},
+                // { 706000, uint256S("0xf98ece86f185e15af9a9d6b554c54f36f0b8b19d11e5e98ffe3b7578a0c8e2f9")},
+                // { 840000, uint256S("0x9b46be33e4a84456e7c4e4785bad8646cb7cf1b6192adfd4c2916e768254f621")},
+                // { 1744442, uint256S("0xe464d7547e1a21fe2471ddc4a6da535e2e9011ed570ab687897c7b7c7d9ed83f")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 4e280b14b8bf62cc6dbb9db87ad2e3a8cb0be9265790b89ffb1c053fd47e6543 (height 1012533)
-            /* nTime    */ 1608561453,
-            /* nTxCount */ 2308996,
-            /* dTxRate  */ 0.0353
+            /* nTime    */ 1705562457,
+            /* nTxCount */ 0,
+            /* dTxRate  */ 0
         };
 
         /* disable fallback fee on mainnet */
@@ -462,29 +466,16 @@ public:
         nTimeKIfork = 1621180800;
 
         int nTimeStart = 1548379385;
-        uint32_t nNonce = 4234676;
+        uint32_t nNonce = 4805460;
         genesis = CreateGenesisBlock(nTimeStart, nNonce, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0xec7d8a93639c6bbf10954c71a2db69617bd90db72b353321927081836939df7a"));
-        assert(genesis.hashMerkleRoot == uint256S("0xa6d192b185dc382a8d7e7dbb5f7a212a54cb93b94e6b9e08869d9169c04993b0"));
-        assert(genesis.hashWitnessMerkleRoot == uint256S("0xa6d192b185dc382a8d7e7dbb5f7a212a54cb93b94e6b9e08869d9169c04993b0"));
-        assert(genesis.hashVeilData == uint256S("0x8b7f273daa09d2d0fa6abeb27a2a87a4ee6c947ac04931f4f3b6b83f1cf7ad3f"));
+        assert(consensus.hashGenesisBlock == uint256S("0x5d70845979cb5a0858f8769997ebb2548d3f90fd69b660447c1ca26344dbf1d0"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
+        assert(genesis.hashWitnessMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
+        assert(genesis.hashVeilData == uint256S("0x76de25a2af615d69a50770ab367dcb223e0357692a25d5e41255c607ba5aa1fe"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
-
-        vSeeds.emplace_back("testnode01.veil-project.com");
-        vSeeds.emplace_back("testnode02.veil-project.com");
-        vSeeds.emplace_back("testnode03.veil-project.com");
-        vSeeds.emplace_back("testnode04.veil-project.com");
-        vSeeds.emplace_back("testnode05.veil-project.com");
-        vSeeds.emplace_back("testnode06.veil-project.com");
-        vSeeds.emplace_back("testnode07.veil-project.com");
-        vSeeds.emplace_back("testnode08.veil-project.com"); // Codeofalltrades seeder
-        vSeeds.emplace_back("testnode09.veil-project.com"); // CaveSpectre seeder
-        // single point DNS failure backups
-        vSeeds.emplace_back("veilseedtestnet.codeofalltrades.com");     // Codeofalltrades seeder
-        vSeeds.emplace_back("veil-seed-test.pontificatingnobody.com");  // CaveSpectre seeder
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
@@ -511,16 +502,15 @@ public:
 
         checkpointData = {
             {
-                    { 1, uint256S("0x918ebe520f7666375d7e4dbb0c269f675440b96b0413ab92bbf28b85126197cd")},
-                    { 95, uint256S("0x1c1d4a474a167a3d474ad7ebda5dfc5560445f885519cb98595aab6f818b1f6f")}
+                    
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 0000000000000037a8cd3e06cd5edbfe9dd1dbcc5dacab279376ef7cfc2b4c75
-            /* nTime    */ 1546202591,
-            /* nTxCount */ 15397,
-            /* dTxRate  */ 0.0034
+            /* nTime    */ 1548379385,
+            /* nTxCount */ 0,
+            /* dTxRate  */ 0
         };
 
         /* enable fallback fee on testnet */
@@ -636,26 +626,17 @@ public:
         nTimeKIfork = 4776508800;
 
         int nTimeStart = 1548379385;
-        uint32_t nNonce = 4234676;
+        uint32_t nNonce = 4805460;
         genesis = CreateGenesisBlock(nTimeStart, nNonce, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0xec7d8a93639c6bbf10954c71a2db69617bd90db72b353321927081836939df7a"));
-        assert(genesis.hashMerkleRoot == uint256S("0xa6d192b185dc382a8d7e7dbb5f7a212a54cb93b94e6b9e08869d9169c04993b0"));
-        assert(genesis.hashWitnessMerkleRoot == uint256S("0xa6d192b185dc382a8d7e7dbb5f7a212a54cb93b94e6b9e08869d9169c04993b0"));
-        assert(genesis.hashVeilData == uint256S("0x8b7f273daa09d2d0fa6abeb27a2a87a4ee6c947ac04931f4f3b6b83f1cf7ad3f"));
+        assert(consensus.hashGenesisBlock == uint256S("0x5d70845979cb5a0858f8769997ebb2548d3f90fd69b660447c1ca26344dbf1d0"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
+        assert(genesis.hashWitnessMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
+        assert(genesis.hashVeilData == uint256S("0x76de25a2af615d69a50770ab367dcb223e0357692a25d5e41255c607ba5aa1fe"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.emplace_back("veil-devnet-seed.asoftwaresolution.com");  // Blondfrogs seeder
-        vSeeds.emplace_back("devnode01.veil-project.com");
-        vSeeds.emplace_back("devnode02.veil-project.com");
-        vSeeds.emplace_back("devnode03.veil-project.com");
-        vSeeds.emplace_back("devnode04.veil-project.com"); 
-        vSeeds.emplace_back("devnode05.veil-project.com"); // Codeofalltrades seeder
-        vSeeds.emplace_back("devnode06.veil-project.com"); // CaveSpectre seeder
-        // single point DNS failure backups
-        vSeeds.emplace_back("veil-devnet-seed.codeofalltrades.com");     // Codeofalltrades seeder
-        vSeeds.emplace_back("veil-seed-dev.pontificatingnobody.com");  // CaveSpectre seeder
+        vSeeds.emplace_back("seed.kampret.com");
 
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
