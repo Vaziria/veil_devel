@@ -70,12 +70,12 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
         }
     }
 
-   printf("genesis block hash: %s\n", genesis.GetHash().GetHex().c_str());
-   printf("genesis nonce: %d\n", genesis.nNonce);
-   printf("genesis nonce: %d\n", genesis.nTime);
-   printf("genesis merkle root: %s\n", genesis.hashMerkleRoot.GetHex().c_str());
-   printf("genesis witness merkle root: %s\n", genesis.hashWitnessMerkleRoot.GetHex().c_str());
-   printf("genesis veil data hash: %s\n", genesis.hashVeilData.GetHex().c_str());
+//    printf("genesis block hash: %s\n", genesis.GetHash().GetHex().c_str());
+//    printf("genesis nonce: %d\n", genesis.nNonce);
+//    printf("genesis nonce: %d\n", genesis.nTime);
+//    printf("genesis merkle root: %s\n", genesis.hashMerkleRoot.GetHex().c_str());
+//    printf("genesis witness merkle root: %s\n", genesis.hashWitnessMerkleRoot.GetHex().c_str());
+//    printf("genesis veil data hash: %s\n", genesis.hashVeilData.GetHex().c_str());
 
     return genesis;
 }

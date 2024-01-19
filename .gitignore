@@ -1,5 +1,7 @@
 depends/sources
 nohup.out
+workspace/dist/*
+workspace
 *.tar.gz
 
 *.exe
