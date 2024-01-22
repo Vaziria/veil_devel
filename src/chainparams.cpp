@@ -201,7 +201,7 @@ public:
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
 
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.powLimitRandomX = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimitRandomX = uint256S("00ffffffff000000000000000000000000000000000000000000000000000000");
         consensus.powLimitProgPow = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitSha256 = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
@@ -217,7 +217,7 @@ public:
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 84; // 70% of confirmation window
-        consensus.nMinerConfirmationWindow = 120; // 2 hours at 1 block per minute
+        consensus.nMinerConfirmationWindow = 10; // 2 hours at 1 block per minute
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 27;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
@@ -245,7 +245,7 @@ public:
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000005442ac21");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x4e280b14b8bf62cc6dbb9db87ad2e3a8cb0be9265790b89ffb1c053fd47e6543"); //1012533
+        consensus.defaultAssumeValid = uint256S("0xa390c829b0a91e3b3976ba815f4727a601f8003aec9f072d7afa266fc09f02f0"); //1012533
 
         consensus.nMinRCTOutputDepth = 12;
 
@@ -270,13 +270,13 @@ public:
         nTimeKIfork = 1621180800;
 
         int nTimeStart = 1704880569;
-        uint32_t nNonce = 448737;
-        genesis = CreateGenesisBlock(nTimeStart, nNonce, 0x1e0ffff0, 1, 50 * COIN);
+        uint32_t nNonce = 735840;
+        genesis = CreateGenesisBlock(nTimeStart, nNonce, 0x1e0ffff0, 1, 5000 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(genesis.hashWitnessMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
-        assert(consensus.hashGenesisBlock == uint256S("0xd6b1e45193925ec14191d5bce777a8743bbad8b3d76c28ed12ffd5d1eb1b2b5e"));
-        assert(genesis.hashMerkleRoot == uint256S("0xb183def50db8b52e7215d8be7338fc1dfb4bacfa609f076c17e424a92c3db544"));
-        assert(genesis.hashVeilData == uint256S("0x76de25a2af615d69a50770ab367dcb223e0357692a25d5e41255c607ba5aa1fe"));
+        assert(genesis.hashWitnessMerkleRoot == uint256S("0xb9ae8175e4b163a07ff2a827e2c3ed5c00ad0f5c354862b5f12cb34d663c817a"));
+        assert(consensus.hashGenesisBlock == uint256S("0xa390c829b0a91e3b3976ba815f4727a601f8003aec9f072d7afa266fc09f02f0"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb9ae8175e4b163a07ff2a827e2c3ed5c00ad0f5c354862b5f12cb34d663c817a"));
+        assert(genesis.hashVeilData == uint256S("0x16990228cd2d697a64bf5aaab2d54f3f229518f222ae191c79fc79fb756a53f6"));
 
         // vSeeds.emplace_back("node01.veil-project.com");
         // vSeeds.emplace_back("node02.veil-project.com");
@@ -348,7 +348,7 @@ public:
         /* disable fallback fee on mainnet */
         m_fallback_fee_enabled = false;
 
-        nMaxNetworkReward = 10 * COIN;
+        nMaxNetworkReward = 1000 * COIN;
         strNetworkRewardAddress = "3AxxVeiLxxxxVeiLxxxxVeiLxxxwy7FAkd";
         nMaxPoWBlocks = 5;
         nConsecutivePoWHeight = 15000;
@@ -369,7 +369,7 @@ public:
         nZerocoinRequiredStakeDepthV2 = 1000; //The required confirmations for a zerocoin to be stakable
         nHeightPoSStart = 1500;
         nKernelModulus = 100;
-        nCoinbaseMaturity = 100;
+        nCoinbaseMaturity = 10;
         nProofOfFullNodeRounds = 4;
         nLastPOWBlock = 9816000; // Continue POW until supply creation ends
         nHeightSupplyCreationStop = 9816000; //Should create very close to 300m coins at this time
@@ -517,7 +517,7 @@ public:
         m_fallback_fee_enabled = true;
 
         strNetworkRewardAddress = "tv1qhzkv6xdc7zpfx9ldsrqpk84hkcf36kclsyyeeh";
-        nMaxNetworkReward = 10 * COIN;
+        nMaxNetworkReward = 1000 * COIN;
 
         /** Zerocoin */
         zerocoinModulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"
@@ -680,7 +680,7 @@ public:
         m_fallback_fee_enabled = true;
 
         strNetworkRewardAddress = "tv1qhzkv6xdc7zpfx9ldsrqpk84hkcf36kclsyyeeh";
-        nMaxNetworkReward = 10 * COIN;
+        nMaxNetworkReward = 1000 * COIN;
 
         /** Zerocoin */
         zerocoinModulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"
@@ -786,7 +786,7 @@ public:
         nHeightKIenforce = 100;
         nTimeKIfork = 4776508800;
 
-        genesis = CreateGenesisBlock(1597617372, 3962663, 0x207fffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1597617372, 3962663, 0x207fffff, 1, 2000000 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 //        assert(consensus.hashGenesisBlock == uint256S("0x0b229468d80839ed5162523e375f8da1d84adae0889745500625ea8a098b3f1d"));
 //        assert(genesis.hashMerkleRoot == uint256S("0x5891ed0f483b598260f3cb95b2d13c4bf20bbc2ad44160e0c84a5fb1477402e3"));
@@ -834,7 +834,7 @@ public:
         m_fallback_fee_enabled = true;
 
         strNetworkRewardAddress = "tv1qhzkv6xdc7zpfx9ldsrqpk84hkcf36kclsyyeeh";
-        nMaxNetworkReward = 10 * COIN;
+        nMaxNetworkReward = 1000 * COIN;
 
         /** Zerocoin */
         zerocoinModulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"

@@ -83,7 +83,7 @@ void BudgetParams::GetBlockRewards(int nBlockHeight, CAmount& nBlockReward,
         nBudgetPayment = 0;
     } else if (nBlockHeight >= 1 && nBlockHeight <= 518399) {
 
-        nBlockReward = 50;
+        nBlockReward = 5000;
         if(IsSuperBlock(nBlockHeight)) {
             nFounderPayment = 10 * nBlocksPerPeriod;
             nFoundationPayment = 10 * nBlocksPerPeriod;
